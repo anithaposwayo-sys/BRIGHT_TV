@@ -1,0 +1,8 @@
+SELECT *,
+    TO_TIMESTAMP(RecordDate2) AS Record_Timestamp,
+    TO_DATE(TO_TIMESTAMP(RecordDate2)) AS Water_date,
+    DAYNAME(TO_TIMESTAMP(RecordDate2)) AS Day_name,
+    MONTHNAME(TO_TIMESTAMP(RecordDate2)) AS Month_name,
+    YEAR(TO_TIMESTAMP(RecordDate2)) AS Year
+FROM workspace.default.viewership_table
+LIMIT 100;
