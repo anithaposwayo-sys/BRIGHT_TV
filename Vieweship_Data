@@ -1,8 +1,33 @@
-SELECT *,
+SELECT DISTINCT UserID0, RecordDate2, `Duration 2`, Channel2,
     TO_TIMESTAMP(RecordDate2) AS Record_Timestamp,
-    TO_DATE(TO_TIMESTAMP(RecordDate2)) AS Water_date,
+    TO_DATE(TO_TIMESTAMP(RecordDate2)) AS Watch_date,
     DAYNAME(TO_TIMESTAMP(RecordDate2)) AS Day_name,
     MONTHNAME(TO_TIMESTAMP(RecordDate2)) AS Month_name,
-    YEAR(TO_TIMESTAMP(RecordDate2)) AS Year
-FROM workspace.default.viewership_table
-LIMIT 100;
+    YEAR(TO_TIMESTAMP(RecordDate2)) AS Year,
+CASE
+WHEN DAYNAME(TO_TIMESTAMP(RecordDate2)) IN ('Sat', 'Sun') THEN 'weekend'
+ELSE 'weekday'
+END AS day_classification,
+CASE
+WHEN Channel2 IN ('SawSee','Sawsee') THEN 'SawSee'
+WHEN Channel2 IN ('SuperSport Live Events','Live on SuperSport', 'Supersport Live Events',
+'DStv Events 1') THEN 'Live Events'
+ELSE Channel2
+END AS Tv_channel,date_format(RecordDate2, 'HH:mm:ss') AS watch_time,
+CASE 
+WHEN hour(`RecordDate2`) BETWEEN 0 AND 5 THEN '01.Midnight'
+WHEN hour(`RecordDate2`) BETWEEN 6 AND 11 THEN '02.Morning'
+WHEN hour(`RecordDate2`) BETWEEN 12 AND 16 THEN '03.Afternoon'
+WHEN hour(`RecordDate2`) BETWEEN 17 AND 23 THEN '04.Evening'
+END AS Time_of_day,
+CASE
+    WHEN DATE_FORMAT(`Duration 2`, 'HH:mm:ss') BETWEEN '00:05:00' AND '00:30:00'
+        THEN '01. Low Usage: <30 min'
+    WHEN DATE_FORMAT(`Duration 2`, 'HH:mm:ss') BETWEEN '00:30:01' AND '00:59:59'
+        THEN '02. Med Usage: <60 min'
+    WHEN DATE_FORMAT(`Duration 2`, 'HH:mm:ss') > '00:59:59'
+        THEN '03. High Usage: >60 min'
+    ELSE '04. No Usage'
+END AS screen_time_bucket,
+DATE_FORMAT(`Duration 2`, 'HH:mm:ss') AS duration
+FROM workspace.default.viewership_table;
