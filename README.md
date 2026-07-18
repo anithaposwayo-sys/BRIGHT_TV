@@ -5,6 +5,7 @@ Management) team in meeting this year’s objective.
 
 This case study is designed to evaluate your ability to analyze data, generate business insights, and make strategic recommendations
 
+** OBJECTIVES**
 **Analyze user and viewing behavior**
 Identify trends in subscriptions and viewing activity.
 Understand when, how often, and how long users watch content.
