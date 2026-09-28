@@ -70,6 +70,8 @@ Preparing the final analytical dataset for dashboarding
 
 
 **📊 Dashboard**
+Loveable Dashboard: https://github.com/anithaposwayo-sys/BRIGHT_TV/commit/357659c669372da1f839cd90e30884b03d651a16
+
 The project included interactive dashboards developed using Excel, Looker Studio and Power BI.
 The dashboards focused on:
 
